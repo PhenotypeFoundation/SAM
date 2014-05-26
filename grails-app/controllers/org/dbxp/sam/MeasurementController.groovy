@@ -215,7 +215,6 @@ class MeasurementController {
 
     def exactImport = {
         def startTime = System.currentTimeMillis()
-        def abort = false
         def sql = new Sql(dataSource)
         def assay = Assay.findById(params.assay)
         def assaySamples = assay.samples
@@ -256,7 +255,7 @@ class MeasurementController {
 		                        }
 		                    }
 							log.warn "Feature mismatches: ${featureMismatches}"
-							throw new Exception( "Feature mismaatch(es): ${featureMismatches}" )	// Break out of loop
+							throw new Exception( "Feature mismatch(es): ${featureMismatches}" )	// Break out of loop
 		                }
 		            }
 					
@@ -302,7 +301,7 @@ class MeasurementController {
 							}
 							
 							// We need a sample and samSample to store our measurement. If not, continue to the next line
-							if( !sample || !samSample ) {
+							if( !samSample ) {
 								log.warn "No sample or SAMSample found for input name ${name}. Discarding this line"
 								
 								def error = "No sample or SAMSample found for input name ${name}"
@@ -316,8 +315,9 @@ class MeasurementController {
 						
 						// Loop through all the columns, and add all items
 	                    splittedRow[1..-1].each { measurement ->
+
 							// Discard empty values
-							if (!measurement) {
+							if (measurement.isEmpty() || measurement.toLowerCase().equals('null')) {
 								i++
 								return
 							}
@@ -326,15 +326,13 @@ class MeasurementController {
 							// we have to retrieve the sample for every measurement
 							if( layout == SUBJECT_LAYOUT ) {
 	                            def sampleTimepoint = timepointList[i].getValue()
-	                            if (!sample || sample.samplingTime != sampleTimepoint) {
-	                                sample = assaySamples.find { it.samplingTime == sampleTimepoint && it.subjectName == name }
-	                                if (sample) {
-										samSample = getSAMSample( sample, assay, assaySAMSamples )
-	                                }
-	                            }
+                                sample = assaySamples.find { it.samplingTime == sampleTimepoint && it.subjectName == name }
+                                if (sample) {
+                                    samSample = getSAMSample( sample, assay, assaySAMSamples )
+                                }
 							
 								// If we don't have a sample to store the measurement, discard this one
-								if( !sample || !samSample ) {
+								if( !samSample ) {
 									log.warn "No sample exists for Subject ${name} and timepoint ${timepointList[i]}"
 									
 									def error = "No sample exists for ${name} with timepoint ${timepointList[i]}"
@@ -358,7 +356,7 @@ class MeasurementController {
 	                            value = null
 	                        }
 							
-	                        if (value) {
+	                        if (value instanceof Double) {
 	                            preparedStatement.addBatch( [featureId: featureId, sampleId: samSample.id, value: value ] )
 	                        }
 							
