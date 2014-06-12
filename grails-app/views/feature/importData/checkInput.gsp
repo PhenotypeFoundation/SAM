@@ -71,5 +71,14 @@
                 </imp:importerFooter>
             </form>
         </div>
+        <r:script>
+        	$(function() {
+        		alert( "JOEHOE");
+        		// Initialize editable table
+        		onStudyWizardPage();
+        	});
+        	
+        </r:script>
+        
     </body>
 </html>
