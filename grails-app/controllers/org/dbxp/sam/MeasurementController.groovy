@@ -540,13 +540,20 @@ class MeasurementController {
                 }
 
                 // Before doing all the layout detection calculations, check if subject_layout is even possible
-                def tmp1 = flow.assay.samples.samplingTime.unique()
-                def tmp2 = flow.assay.samples.subjectName.unique()
-                if(tmp1.size()==0 || tmp1.contains(null) ||  tmp2.size()==0 || tmp2.contains(null)){
+                def tmp1 = null
+                def tmp2 = null
+                try {
+                    tmp1 = flow.assay.samples.samplingTime.unique()
+                    tmp2 = flow.assay.samples.subjectName.unique()
+                } catch (NullPointerException npo) {
+                    //Probably the samples don't have a samplingTime and/or subjectName, thus subject_layout is not possible
+                }
+
+                if(tmp1 == null || tmp2 == null || tmp1.size()==0 || tmp1.contains(null) ||  tmp2.size()==0 || tmp2.contains(null)){
                     // No start times? No subject names? Cannot select subject layout then!
                     flow.disableSubjectLayout = true
                     flow.layoutguess = 'sample_layout'
-                } else {
+                } else if(flow.layoutguess != 'sample_layout') {
                     flow.disableSubjectLayout = false;
                     // Start layout detection calculations
 
