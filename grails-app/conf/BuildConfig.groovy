@@ -40,7 +40,7 @@ grails.project.dependency.resolution = {
         }
 
         compile(
-            ":dbxp-base:0.1.2.5",
+            ":dbxp-base:0.2.0.5",
             ":hibernate:$grailsVersion",
             ":tomcat:$grailsVersion",
             ":grom:latest.integration",
@@ -64,7 +64,7 @@ grails.project.dependency.resolution = {
 
 //grails.plugin.location.'dbxpModuleBase' = '../dbxpModuleBase'
 //grails.plugin.location.'matrixImporter' = '../MatrixImporter'
-//grails.plugin.location.'gdt' = '../gdt'
+//grails.plugin.location.'gdt' = '../GDT'
 //grails.plugin.location.'dbxpBase' = '../dbxpBase'
 
 //grails.server.port.http = "8182"  // The modern way of setting the server port
