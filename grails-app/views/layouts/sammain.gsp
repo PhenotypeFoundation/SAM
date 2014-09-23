@@ -7,6 +7,8 @@
 	        <r:require modules="sam2"/>
 
 	        <g:layoutHead />
+
+            <script type="text/javascript">baseUrl = '${grailsApplication.config.grails.serverURL}';</script>
 	    </head>
 	    <body>
 			<content tag="topnav">
