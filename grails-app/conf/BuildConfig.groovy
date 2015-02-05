@@ -50,7 +50,7 @@ grails.project.dependency.resolution = {
         }
 
         compile(
-	        ':matrix-importer:0.2.3.7',
+	        ':matrix-importer:0.2.3.8',
             ':ajaxflow:latest.integration',
             ':dbxp-module-base:0.6.1.3',
             ':resources:latest.integration',

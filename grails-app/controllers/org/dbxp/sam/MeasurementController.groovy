@@ -508,7 +508,7 @@ class MeasurementController {
 				flow.comments = null
 
                 if(flow.inputField!=null) {
-                    text = MatrixImporter.getInstance().importString(flow.inputField,["delimiter":"\t"]);
+                    text = MatrixImporter.getInstance().importString(flow.inputField,["delimiter":"\t"],false,false);
                     flow.text = text
                     flow.layoutguess = "sample_layout";
                 } else {
