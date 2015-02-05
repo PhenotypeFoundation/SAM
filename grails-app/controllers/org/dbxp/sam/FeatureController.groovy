@@ -492,7 +492,7 @@ class FeatureController {
                 // Check if the user used the textarea
                 if(flow.inputField!=null && flow.inputField!="") {
                     // Parse the content of the textarea using the Matriximporter
-                    text = MatrixImporter.getInstance().importString(flow.inputField,["delimiter":"\t"]);
+                    text = MatrixImporter.getInstance().importString(flow.inputField,["delimiter":"\t"], false, false);
                     // TODO Unfortunately, between the 'matchColumns''s 'previous' action and arriving
                     // here from that action, the first list item seems to get lost if it contains only
                     // one empty string. I believe this happens in the 'uploadAndSelectTemplate.gsp' view,
