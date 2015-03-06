@@ -73,7 +73,6 @@
         </div>
         <r:script>
         	$(function() {
-        		alert( "JOEHOE");
         		// Initialize editable table
         		onStudyWizardPage();
         	});
